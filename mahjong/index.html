@@ -54,13 +54,13 @@ main{max-width:900px;margin:24px auto;padding:0 16px 40px}.intro{display:flex;ju
 const $=id=>document.getElementById(id);
 const questions=[
 {round:"東1局",roundWind:"東",seat:"南家（子）",dealer:false,method:"ロン",riichi:true,closed:true,dora:"三萬",ura:"九筒",doraCount:1,uraCount:0,fu:30,han:3,yaku:["リーチ 1翻","平和 1翻"],fuNote:"副底20＋門前ロン10＝30符",wait:"両面待ち",winner:"子",groups:[["一萬","二萬","三萬"],["四筒","五筒","六筒"],["二索","三索","四索"],["六索","七索","八索"],["五筒","五筒"]],melds:[]},
-{round:"東2局",roundWind:"東",seat:"北家（子）",dealer:false,method:"ツモ",riichi:true,closed:true,dora:"四索",ura:"白",doraCount:1,uraCount:1,fu:20,han:4,yaku:["リーチ 1翻","平和 1翻","門前清自摸和 1翻"],fuNote:"平和ツモのため20符固定",wait:"両面待ち",winner:"子",groups:[["一萬","二萬","三萬"],["四萬","五萬","六萬"],["二筒","三筒","四筒"],["六索","七索","八索"],["二筒","二筒"]],melds:[]},
+{round:"東2局",roundWind:"東",seat:"北家（子）",dealer:false,method:"ツモ",riichi:true,closed:true,dora:"四索",ura:"白",doraCount:1,uraCount:0,fu:20,han:4,yaku:["リーチ 1翻","平和 1翻","門前清自摸和 1翻"],fuNote:"平和ツモのため20符固定",wait:"両面待ち",winner:"子",groups:[["一萬","二萬","三萬"],["四萬","五萬","六萬"],["二筒","三筒","四筒"],["六索","七索","八索"],["二筒","二筒"]],melds:[]},
 {round:"東4局",roundWind:"東",seat:"東家（親）",dealer:true,method:"ロン",riichi:true,closed:true,dora:"七萬",ura:"二索",doraCount:1,uraCount:0,fu:40,han:3,yaku:["リーチ 1翻","役牌・白 1翻"],fuNote:"副底20＋門前ロン10＋白の暗刻8＋端数切上げ＝40符",wait:"単騎待ち",winner:"親",groups:[["一萬","一萬","一萬"],["白","白","白"],["三筒","四筒","五筒"],["六索","七索","八索"],["九筒","九筒"]],melds:[]},
 {round:"南1局",roundWind:"南",seat:"西家（子）",dealer:false,method:"ロン",riichi:false,closed:false,dora:"五萬",ura:"—",doraCount:2,uraCount:0,fu:30,han:3,yaku:["断么九 1翻（喰いタン）"],fuNote:"副底20＋中張牌の明刻2＋両面ロン（副露）＝30符",wait:"両面待ち",winner:"子",groups:[["二萬","三萬","四萬"],["三筒","四筒","五筒"],["四索","五索","六索"],["六筒","六筒","六筒"],["二索","二索"]],melds:[3]},
-{round:"南2局",roundWind:"南",seat:"南家（親）",dealer:true,method:"ツモ",riichi:false,closed:false,dora:"八筒",ura:"—",doraCount:2,uraCount:0,fu:40,han:3,yaku:["役牌・南 1翻"],fuNote:"副底20＋ツモ2＋南の明刻4＋中張牌の明刻2＋端数切上げ＝40符",wait:"嵌張待ち",winner:"親",groups:[["南","南","南"],["二萬","三萬","四萬"],["四筒","五筒","六筒"],["七索","八索","九索"],["三萬","三萬"]],melds:[0]},
-{round:"南3局",roundWind:"南",seat:"東家（子）",dealer:false,method:"ツモ",riichi:true,closed:true,dora:"三筒",ura:"六萬",doraCount:1,uraCount:0,fu:40,han:4,yaku:["リーチ 1翻","役牌・發 1翻","門前清自摸和 1翻"],fuNote:"副底20＋ツモ2＋發の暗刻8＋端数切上げ＝40符",wait:"辺張待ち",winner:"子",groups:[["發","發","發"],["一萬","二萬","三萬"],["四筒","五筒","六筒"],["七索","八索","九索"],["五萬","五萬"]],melds:[]},
-{round:"南4局",roundWind:"南",seat:"南家（親）",dealer:true,method:"ロン",riichi:false,closed:false,dora:"九索",ura:"—",doraCount:3,uraCount:0,fu:50,han:4,yaku:["混一色 2翻（副露）"],fuNote:"副底20＋字牌の明刻4＋么九牌の明刻4＋役牌雀頭2＋単騎2、切り上げ＝50符",wait:"単騎待ち",winner:"親",groups:[["東","東","東"],["一萬","二萬","三萬"],["七萬","八萬","九萬"],["北","北","北"],["五萬","五萬"]],melds:[0,3]},
-{round:"南4局",roundWind:"南",seat:"西家（子）",dealer:false,method:"ロン",riichi:true,closed:true,dora:"五索",ura:"一筒",doraCount:2,uraCount:1,fu:30,han:5,yaku:["リーチ 1翻","一気通貫 2翻","ドラ 2翻"],fuNote:"副底20＋門前ロン10＝30符",wait:"両面待ち",winner:"子",groups:[["一萬","二萬","三萬"],["四萬","五萬","六萬"],["七萬","八萬","九萬"],["二筒","三筒","四筒"],["六索","六索"]],melds:[]}
+{round:"南2局",roundWind:"南",seat:"南家（親）",dealer:true,method:"ツモ",riichi:false,closed:false,dora:"八筒",ura:"—",doraCount:2,uraCount:0,fu:30,han:3,yaku:["役牌・南 1翻"],fuNote:"副底20＋ツモ2＋南の明刻4＝26符、10符単位に切り上げて30符",wait:"嵌張待ち",winner:"親",groups:[["南","南","南"],["二萬","三萬","四萬"],["四筒","五筒","六筒"],["七索","八索","九索"],["三萬","三萬"]],melds:[0]},
+{round:"南3局",roundWind:"南",seat:"東家（子）",dealer:false,method:"ツモ",riichi:true,closed:true,dora:"三筒",ura:"六萬",doraCount:1,uraCount:0,fu:30,han:4,yaku:["リーチ 1翻","役牌・發 1翻","門前清自摸和 1翻"],fuNote:"副底20＋ツモ2＋發の暗刻8＝30符",wait:"辺張待ち",winner:"子",groups:[["發","發","發"],["一萬","二萬","三萬"],["四筒","五筒","六筒"],["七索","八索","九索"],["五萬","五萬"]],melds:[]},
+{round:"南4局",roundWind:"南",seat:"南家（親）",dealer:true,method:"ロン",riichi:false,closed:false,dora:"九索",ura:"—",doraCount:2,uraCount:0,fu:30,han:4,yaku:["混一色 2翻（副露）"],fuNote:"副底20＋東・北の明刻8＋単騎待ち2＝30符",wait:"単騎待ち",winner:"親",groups:[["東","東","東"],["一萬","二萬","三萬"],["七萬","八萬","九萬"],["北","北","北"],["五萬","五萬"]],melds:[0,3]},
+{round:"南4局",roundWind:"南",seat:"西家（子）",dealer:false,method:"ロン",riichi:true,closed:true,dora:"五索",ura:"一筒",doraCount:1,uraCount:1,fu:30,han:5,yaku:["リーチ 1翻","一気通貫 2翻","ドラ 2翻"],fuNote:"副底20＋門前ロン10＝30符",wait:"両面待ち",winner:"子",groups:[["一萬","二萬","三萬"],["四萬","五萬","六萬"],["七萬","八萬","九萬"],["二筒","三筒","四筒"],["六索","六索"]],melds:[]}
 ];
 let current=null,selected=-1,answered=false,total=0,correct=0,serial=0;
 const ceil100=n=>Math.ceil(n/100)*100;
@@ -73,7 +73,7 @@ function score(fu,han,dealer,method){
  if(dealer)return {all:ceil100(base*2),limit};
  return {child:ceil100(base),parent:ceil100(base*2),limit};
 }
-function formatScore(s){if(s.ron)return s.ron.toLocaleString("ja-JP")+"点";if(s.all)return s.all.toLocaleString("ja-JP")+"点オール";return s.child.toLocaleString("ja-JP")+"点 / "+s.parent.toLocaleString("ja-JP")+"点";}
+function formatScore(s){if(s.ron)return s.ron.toLocaleString("ja-JP")+"点";if(s.all)return s.all.toLocaleString("ja-JP")+"点オール";return "子"+s.child.toLocaleString("ja-JP")+"点 / 親"+s.parent.toLocaleString("ja-JP")+"点";}
 function label(fu,han,q){return fu+"符 "+han+"翻："+formatScore(score(fu,han,q.dealer,q.method));}
 function makeOptions(q){
  const candidates=[[q.fu,q.han],[q.fu===30?40:q.fu===40?50:30,q.han],[q.fu,q.han===1?2:q.han-1],[q.fu===20?30:q.fu-10,q.han+1],[q.fu+10,q.han]];
