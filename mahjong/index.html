@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#102d27">
+<title>麻雀 点数計算ドリル | Mリーグルール</title>
+<style>
+:root{color-scheme:light;--ink:#172b27;--muted:#66756f;--green:#174b3d;--green2:#236b55;--gold:#d5a94d;--paper:#f4f6f2;--line:#dce4dc;--red:#b84c45}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;line-height:1.55}
+header{background:linear-gradient(120deg,#102d27,#1c5544);color:#fff;padding:18px max(18px,calc((100% - 900px)/2));box-shadow:0 3px 16px #102d2722}
+.top{max-width:900px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{font-weight:800;letter-spacing:.04em;font-size:19px}.brand small{display:block;font-size:11px;color:#c8d9d0;font-weight:500;letter-spacing:.12em}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:12px 18px;font-weight:750;transition:transform .12s,filter .12s}button:active{transform:scale(.98)}button:focus-visible,input:focus-visible{outline:3px solid #e3b85c;outline-offset:3px}
+.primary{background:var(--gold);color:#182b24;box-shadow:0 3px 0 #9b7530}.secondary{background:#e8eee9;color:var(--green);border:1px solid var(--line)}.dark{background:var(--green);color:white}.top button{background:#fff;color:var(--green);white-space:nowrap}
+main{max-width:900px;margin:24px auto;padding:0 16px 40px}.intro{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:0 2px 16px}.intro h1{font-size:clamp(21px,4vw,28px);margin:0 0 3px}.intro p{color:var(--muted);margin:0;font-size:13px}.scoreboard{display:flex;gap:8px;flex-wrap:wrap}.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:7px 12px;font-size:12px;color:var(--muted)}.stat b{color:var(--green);font-size:16px;margin-left:5px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:clamp(16px,3.5vw,26px);box-shadow:0 8px 24px #16392b0a;margin-bottom:16px}
+.panelhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.panelhead h2{font-size:17px;margin:0}.tag{font-size:11px;font-weight:800;color:var(--green2);background:#e9f2ec;border-radius:99px;padding:5px 10px}
+.empty{padding:40px 12px;text-align:center;color:var(--muted)}.empty .mark{font-size:36px;margin-bottom:8px}.empty strong{display:block;color:var(--ink);font-size:17px;margin-bottom:5px}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}.meta div{background:#f5f8f5;border:1px solid #e7ede7;border-radius:11px;padding:9px 11px;min-width:0}.meta span{display:block;color:var(--muted);font-size:11px}.meta b{display:block;font-size:14px;margin-top:2px}
+.sectionlabel{font-size:12px;color:var(--muted);font-weight:800;letter-spacing:.06em;margin:17px 0 8px}.indicators{display:flex;gap:12px;flex-wrap:wrap}.indicator{background:#f8f6ed;border:1px solid #e9dfc4;border-radius:10px;padding:7px 12px;font-weight:750}.indicator small{display:block;font-size:10px;color:var(--muted);font-weight:500}
+.hand{background:#eaf1eb;border-radius:13px;padding:14px;display:flex;flex-wrap:wrap;gap:9px;align-items:center}.group{display:flex;gap:3px;align-items:center;background:#fff;padding:5px;border-radius:8px;border:1px solid #d9e2da;box-shadow:0 2px 0 #d2ddd3}.tile{display:inline-flex;align-items:center;justify-content:center;min-width:25px;height:37px;padding:0 3px;border-radius:4px;background:linear-gradient(#fff,#f4f6f1);border:1px solid #cbd5cb;color:#243c32;font-size:14px;font-weight:850;box-shadow:0 1px 1px #0001}.group.meld{border-color:#d8b66a;background:#fff9e9}.group .tile.red{color:#c64a3e}.groupnote{font-size:10px;color:#8b7040;align-self:center}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail div{border-bottom:1px dashed var(--line);padding:7px 2px;display:flex;justify-content:space-between;gap:10px;font-size:13px}.detail span{color:var(--muted)}.detail b{text-align:right}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px}.option{position:relative;text-align:left;background:#fff;border:1.5px solid var(--line);color:var(--ink);padding:14px;border-radius:12px;min-height:68px}.option .letter{display:inline-grid;place-items:center;width:23px;height:23px;border-radius:7px;background:#edf2ed;color:var(--green);font-size:12px;margin-right:7px}.option.selected{border-color:var(--green2);background:#f0f7f1;box-shadow:inset 0 0 0 1px var(--green2)}.option.correct{border-color:#32835e;background:#eef8f1}.option.wrong{border-color:var(--red);background:#fff2f0}.option:disabled{cursor:default;opacity:1}.option strong{font-size:15px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.actions button{flex:1;min-width:110px}.feedback{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:14px}.feedback.good{background:#edf7ef;border:1px solid #c7e5ce;color:#225a38}.feedback.bad{background:#fff2ef;border:1px solid #f0cbc5;color:#873d35}.feedback b{display:block;font-size:16px;margin-bottom:3px}.explain{margin-top:9px;color:inherit;opacity:.9}
+.progress{height:7px;background:#e8eee8;border-radius:99px;overflow:hidden;margin-top:8px}.progress span{display:block;height:100%;background:var(--gold);width:0;transition:width .2s}
+.rules{font-size:12px;color:var(--muted);line-height:1.7}.rules summary{cursor:pointer;color:var(--green);font-weight:800}.rules ul{padding-left:20px}.footer{text-align:center;color:#84918a;font-size:11px;padding:8px}
+@media(max-width:560px){header{padding:14px 16px}.brand{font-size:16px}.top button{padding:10px 13px;font-size:13px}main{margin:17px auto}.intro{align-items:start;flex-direction:column}.meta{grid-template-columns:repeat(2,1fr)}.detail{grid-template-columns:1fr}.options{grid-template-columns:1fr}.option{min-height:58px}.panel{border-radius:15px}.tile{min-width:23px;height:34px;font-size:13px}}
+</style>
+</head>
+<body>
+<header><div class="top"><div class="brand">麻雀 点数計算ドリル<small>M-LEAGUE RULE / SCORE TRAINING</small></div><button id="newTop" type="button">＋ 問題</button></div></header>
+<main>
+<div class="intro"><div><h1>点数計算に強くなる</h1><p>場況と手牌を見て、正しいアガリ点を選ぼう。</p></div><div class="scoreboard"><div class="stat">正解 <b id="correctCount">0</b></div><div class="stat">挑戦 <b id="totalCount">0</b></div><div class="stat">正答率 <b id="rate">—</b></div></div></div>
+<div class="panel" id="questionPanel">
+ <div class="panelhead"><h2>問題</h2><span class="tag" id="questionNo">準備中</span></div>
+ <div id="questionBody" class="empty"><div class="mark">🀄</div><strong>点数計算の練習を始めよう</strong>上の「問題」ボタンを押すと、場況と和了形が表示されます。<div style="margin-top:18px"><button class="primary" id="startBtn">問題を出す</button></div></div>
+</div>
+<div class="panel" id="answerPanel">
+ <div class="panelhead"><h2>回答を選択</h2><span class="tag">4択</span></div>
+ <div id="options" class="empty" style="padding:15px">問題を表示すると選択肢がここに表示されます。</div>
+ <div class="actions"><button class="dark" id="checkBtn" disabled>回答する</button><button class="secondary" id="nextBtn" disabled>次へ →</button></div>
+ <div id="feedback" aria-live="polite"></div>
+</div>
+<div class="panel rules"><details><summary>Mリーグの点数計算ルールについて</summary><ul>
+<li>符は副底20符、門前ロン10符、ツモ2符（平和ツモを除く）、待ち・面子・雀頭の符を加算し、10符単位に切り上げます。七対子は25符固定です。</li>
+<li>翻数は成立役とドラの合計です。ドラだけではアガれません。リーチ時は裏ドラも加算します。</li>
+<li>ロン・ツモの支払いは100点単位で切り上げ。30符4翻・60符3翻は切り上げ満貫、満貫以上はMリーグ規定の区分を適用します。</li>
+<li>このドリルは練習用の代表的な和了形を出題します。本場・供託・責任払い・複合役満などは出題対象外です。</li>
+</ul><p>ルール参照：<a href="https://m-league.jp/about/" target="_blank" rel="noopener">Mリーグ公式ルール</a></p></details></div>
+<div class="footer">オフラインで動作します。問題・成績はこのページを開いている間のみ保持されます。</div>
+</main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const questions=[
+{round:"東1局",roundWind:"東",seat:"南家（子）",dealer:false,method:"ロン",riichi:true,closed:true,dora:"三萬",ura:"九筒",doraCount:1,uraCount:0,fu:30,han:3,yaku:["リーチ 1翻","平和 1翻"],fuNote:"副底20＋門前ロン10＝30符",wait:"両面待ち",winner:"子",groups:[["一萬","二萬","三萬"],["四筒","五筒","六筒"],["二索","三索","四索"],["六索","七索","八索"],["五筒","五筒"]],melds:[]},
+{round:"東2局",roundWind:"東",seat:"北家（子）",dealer:false,method:"ツモ",riichi:true,closed:true,dora:"四索",ura:"白",doraCount:1,uraCount:1,fu:20,han:4,yaku:["リーチ 1翻","平和 1翻","門前清自摸和 1翻"],fuNote:"平和ツモのため20符固定",wait:"両面待ち",winner:"子",groups:[["一萬","二萬","三萬"],["四萬","五萬","六萬"],["二筒","三筒","四筒"],["六索","七索","八索"],["二筒","二筒"]],melds:[]},
+{round:"東4局",roundWind:"東",seat:"東家（親）",dealer:true,method:"ロン",riichi:true,closed:true,dora:"七萬",ura:"二索",doraCount:1,uraCount:0,fu:40,han:3,yaku:["リーチ 1翻","役牌・白 1翻"],fuNote:"副底20＋門前ロン10＋白の暗刻8＋端数切上げ＝40符",wait:"単騎待ち",winner:"親",groups:[["一萬","一萬","一萬"],["白","白","白"],["三筒","四筒","五筒"],["六索","七索","八索"],["九筒","九筒"]],melds:[]},
+{round:"南1局",roundWind:"南",seat:"西家（子）",dealer:false,method:"ロン",riichi:false,closed:false,dora:"五萬",ura:"—",doraCount:2,uraCount:0,fu:30,han:3,yaku:["断么九 1翻（喰いタン）"],fuNote:"副底20＋中張牌の明刻2＋両面ロン（副露）＝30符",wait:"両面待ち",winner:"子",groups:[["二萬","三萬","四萬"],["三筒","四筒","五筒"],["四索","五索","六索"],["六筒","六筒","六筒"],["二索","二索"]],melds:[3]},
+{round:"南2局",roundWind:"南",seat:"南家（親）",dealer:true,method:"ツモ",riichi:false,closed:false,dora:"八筒",ura:"—",doraCount:2,uraCount:0,fu:40,han:3,yaku:["役牌・南 1翻"],fuNote:"副底20＋ツモ2＋南の明刻4＋中張牌の明刻2＋端数切上げ＝40符",wait:"嵌張待ち",winner:"親",groups:[["南","南","南"],["二萬","三萬","四萬"],["四筒","五筒","六筒"],["七索","八索","九索"],["三萬","三萬"]],melds:[0]},
+{round:"南3局",roundWind:"南",seat:"東家（子）",dealer:false,method:"ツモ",riichi:true,closed:true,dora:"三筒",ura:"六萬",doraCount:1,uraCount:0,fu:40,han:4,yaku:["リーチ 1翻","役牌・發 1翻","門前清自摸和 1翻"],fuNote:"副底20＋ツモ2＋發の暗刻8＋端数切上げ＝40符",wait:"辺張待ち",winner:"子",groups:[["發","發","發"],["一萬","二萬","三萬"],["四筒","五筒","六筒"],["七索","八索","九索"],["五萬","五萬"]],melds:[]},
+{round:"南4局",roundWind:"南",seat:"南家（親）",dealer:true,method:"ロン",riichi:false,closed:false,dora:"九索",ura:"—",doraCount:3,uraCount:0,fu:50,han:4,yaku:["混一色 2翻（副露）"],fuNote:"副底20＋字牌の明刻4＋么九牌の明刻4＋役牌雀頭2＋単騎2、切り上げ＝50符",wait:"単騎待ち",winner:"親",groups:[["東","東","東"],["一萬","二萬","三萬"],["七萬","八萬","九萬"],["北","北","北"],["五萬","五萬"]],melds:[0,3]},
+{round:"南4局",roundWind:"南",seat:"西家（子）",dealer:false,method:"ロン",riichi:true,closed:true,dora:"五索",ura:"一筒",doraCount:2,uraCount:1,fu:30,han:5,yaku:["リーチ 1翻","一気通貫 2翻","ドラ 2翻"],fuNote:"副底20＋門前ロン10＝30符",wait:"両面待ち",winner:"子",groups:[["一萬","二萬","三萬"],["四萬","五萬","六萬"],["七萬","八萬","九萬"],["二筒","三筒","四筒"],["六索","六索"]],melds:[]}
+];
+let current=null,selected=-1,answered=false,total=0,correct=0,serial=0;
+const ceil100=n=>Math.ceil(n/100)*100;
+function score(fu,han,dealer,method){
+ let base=fu*Math.pow(2,han+2),limit=null;
+ if(han>=11)limit="三倍満";else if(han>=8)limit="倍満";else if(han>=6)limit="跳満";
+ else if(han>=5||base>=2000||((fu===30&&han===4)||(fu===60&&han===3)))limit="満貫";
+ if(limit){const unit={満貫:8000,跳満:12000,倍満:16000,"三倍満":24000}[limit]*(dealer?1.5:1);base=unit;}
+ if(method==="ロン")return {ron:ceil100(base*(dealer?6:4)),limit};
+ if(dealer)return {all:ceil100(base*2),limit};
+ return {child:ceil100(base),parent:ceil100(base*2),limit};
+}
+function formatScore(s){if(s.ron)return s.ron.toLocaleString("ja-JP")+"点";if(s.all)return s.all.toLocaleString("ja-JP")+"点オール";return s.child.toLocaleString("ja-JP")+"点 / "+s.parent.toLocaleString("ja-JP")+"点";}
+function label(fu,han,q){return fu+"符 "+han+"翻："+formatScore(score(fu,han,q.dealer,q.method));}
+function makeOptions(q){
+ const candidates=[[q.fu,q.han],[q.fu===30?40:q.fu===40?50:30,q.han],[q.fu,q.han===1?2:q.han-1],[q.fu===20?30:q.fu-10,q.han+1],[q.fu+10,q.han]];
+ const seen=new Set(),out=[];
+ for(const [f,h] of candidates){if(f<20||h<1)continue;const t=label(f,h,q);if(!seen.has(t)){seen.add(t);out.push({fu:f,han:h,text:t,correct:f===q.fu&&h===q.han});}}
+ for(let f=20;out.length<4&&f<=110;f+=10){for(let h=1;h<=8&&out.length<4;h++){const t=label(f,h,q);if(!seen.has(t)){seen.add(t);out.push({fu:f,han:h,text:t,correct:f===q.fu&&h===q.han});}}}
+ return out.slice(0,4).sort(()=>Math.random()-.5);
+}
+function tileGroup(arr,isMeld){return '<div class="group '+(isMeld?'meld':'')+'">'+arr.map(t=>'<span class="tile '+(t==="赤五萬"||t==="赤五筒"||t==="赤五索"?'red':'')+'">'+t+'</span>').join('')+'</div>';}
+function renderQuestion(q){
+ const groups=q.groups.map((g,i)=>tileGroup(g,q.melds.includes(i))).join('');
+ const ura=q.riichi?'<div class="indicator"><small>裏ドラ表示牌</small>'+q.ura+'</div>':'';
+ $("questionBody").className="";
+ $("questionBody").innerHTML=
+ '<div class="meta"><div><span>局</span><b>'+q.round+'</b></div><div><span>場風 / 自風</span><b>'+q.roundWind+'場 / '+q.seat.slice(0,1)+'</b></div><div><span>和了者</span><b>'+q.seat+'</b></div><div><span>和了方法</span><b>'+q.method+'</b></div></div>'+
+ '<div class="sectionlabel">ドラ表示牌</div><div class="indicators"><div class="indicator"><small>表ドラ</small>'+q.dora+'</div>'+ura+'</div>'+
+ '<div class="sectionlabel">和了形 <span style="font-weight:500">（金色の枠は副露面子）</span></div><div class="hand">'+groups+'</div>'+
+ '<div class="sectionlabel">点数計算に必要な情報</div><div class="detail">'+
+ '<div><span>手牌</span><b>'+(q.closed?'門前':'副露あり')+'</b></div><div><span>リーチ</span><b>'+(q.riichi?'あり':'なし')+'</b></div>'+
+ '<div><span>表ドラ</span><b>'+q.doraCount+'枚</b></div><div><span>裏ドラ</span><b>'+(q.riichi?q.uraCount+'枚':'対象外')+'</b></div>'+
+ '<div><span>待ち</span><b>'+q.wait+'</b></div><div><span>役</span><b>'+q.yaku.join(' / ')+'</b></div></div>'+
+ '<div class="sectionlabel">符の内訳メモ</div><div style="font-size:13px;color:var(--muted)">'+q.fuNote+'</div>';
+ $("questionNo").textContent="第"+serial+"問";
+ $("options").className="options";
+ $("options").innerHTML=makeOptions(q).map((o,i)=>'<button type="button" class="option" data-i="'+i+'"><span class="letter">'+["A","B","C","D"][i]+'</span><strong>'+o.text+'</strong></button>').join('');
+ q.options=Array.from($("options").querySelectorAll(".option")).map((el,i)=>({el,...makeOptionsCache[i]}));
+}
+let makeOptionsCache=[];
+function newQuestion(){
+ serial++;current=questions[Math.floor(Math.random()*questions.length)];selected=-1;answered=false;
+ makeOptionsCache=makeOptions(current);
+ renderQuestion(current);
+ // renderQuestion uses the prepared option set so the displayed and judged answers are identical.
+ current.options=makeOptionsCache;
+ $("options").innerHTML=makeOptionsCache.map((o,i)=>'<button type="button" class="option" data-i="'+i+'"><span class="letter">'+["A","B","C","D"][i]+'</span><strong>'+o.text+'</strong></button>').join('');
+ $("options").querySelectorAll(".option").forEach(el=>el.addEventListener("click",()=>{if(answered)return;selected=Number(el.dataset.i);$("options").querySelectorAll(".option").forEach((b,i)=>b.classList.toggle("selected",i===selected));$("checkBtn").disabled=false;}));
+ $("checkBtn").disabled=true;$("nextBtn").disabled=true;$("feedback").innerHTML="";
+}
+function checkAnswer(){
+ if(!current||selected<0||answered)return;answered=true;total++;
+ const right=current.options.findIndex(o=>o.correct),ok=selected===right;if(ok)correct++;
+ $("options").querySelectorAll(".option").forEach((el,i)=>{el.disabled=true;if(i===right)el.classList.add("correct");else if(i===selected)el.classList.add("wrong");});
+ $("feedback").className="feedback "+(ok?"good":"bad");
+ $("feedback").innerHTML='<b>'+(ok?'正解！':'残念、不正解')+'</b>正解：'+current.fu+'符 '+current.han+'翻 ／ '+formatScore(score(current.fu,current.han,current.dealer,current.method))+'<div class="explain">符：'+current.fuNote+'<br>翻：'+current.yaku.join('、')+'。ドラ合計 '+(current.doraCount+current.uraCount)+'翻を加算しています。<br>点数はMリーグ公式ルールの計算（100点単位切り上げ・切り上げ満貫）です。</div>';
+ $("correctCount").textContent=correct;$("totalCount").textContent=total;$("rate").textContent=Math.round(correct/total*100)+"%";
+ $("checkBtn").disabled=true;$("nextBtn").disabled=false;
+}
+$("newTop").addEventListener("click",newQuestion);$("startBtn").addEventListener("click",newQuestion);$("checkBtn").addEventListener("click",checkAnswer);$("nextBtn").addEventListener("click",newQuestion);
+</script>
+</body>
+</html>
