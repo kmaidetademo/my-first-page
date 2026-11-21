@@ -12,7 +12,7 @@ header{background:linear-gradient(120deg,#102d27,#1c5544);color:#fff;padding:18p
 .top{max-width:900px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{font-weight:800;letter-spacing:.04em;font-size:19px}.brand small{display:block;font-size:11px;color:#c8d9d0;font-weight:500;letter-spacing:.12em}
 button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:12px 18px;font-weight:750;transition:transform .12s,filter .12s}button:active{transform:scale(.98)}button:focus-visible,input:focus-visible{outline:3px solid #e3b85c;outline-offset:3px}
 .primary{background:var(--gold);color:#182b24;box-shadow:0 3px 0 #9b7530}.secondary{background:#e8eee9;color:var(--green);border:1px solid var(--line)}.dark{background:var(--green);color:white}.top button{background:#fff;color:var(--green);white-space:nowrap}
-main{max-width:900px;margin:24px auto;padding:0 16px 40px}.intro{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:0 2px 16px}.intro h1{font-size:clamp(21px,4vw,28px);margin:0 0 3px}.intro p{color:var(--muted);margin:0;font-size:13px}.scoreboard{display:flex;gap:8px;flex-wrap:wrap}.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:7px 12px;font-size:12px;color:var(--muted)}.stat b{color:var(--green);font-size:16px;margin-left:5px}
+main{max-width:1100px;margin:24px auto;padding:0 16px 40px}.practice-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(310px,.85fr);gap:16px;align-items:start}.practice-layout .panel{margin-bottom:0}.practice-layout #answerPanel{position:sticky;top:16px}.intro{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:0 2px 16px}.intro h1{font-size:clamp(21px,4vw,28px);margin:0 0 3px}.intro p{color:var(--muted);margin:0;font-size:13px}.scoreboard{display:flex;gap:8px;flex-wrap:wrap}.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:7px 12px;font-size:12px;color:var(--muted)}.stat b{color:var(--green);font-size:16px;margin-left:5px}
 .panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:clamp(16px,3.5vw,26px);box-shadow:0 8px 24px #16392b0a;margin-bottom:16px}
 .panelhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.panelhead h2{font-size:17px;margin:0}.tag{font-size:11px;font-weight:800;color:var(--green2);background:#e9f2ec;border-radius:99px;padding:5px 10px}
 .empty{padding:40px 12px;text-align:center;color:var(--muted)}.empty .mark{font-size:36px;margin-bottom:8px}.empty strong{display:block;color:var(--ink);font-size:17px;margin-bottom:5px}
@@ -24,7 +24,7 @@ main{max-width:900px;margin:24px auto;padding:0 16px 40px}.intro{display:flex;ju
 .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.actions button{flex:1;min-width:110px}.feedback{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:14px}.feedback.good{background:#edf7ef;border:1px solid #c7e5ce;color:#225a38}.feedback.bad{background:#fff2ef;border:1px solid #f0cbc5;color:#873d35}.feedback b{display:block;font-size:16px;margin-bottom:3px}.explain{margin-top:9px;color:inherit;opacity:.9}
 .progress{height:7px;background:#e8eee8;border-radius:99px;overflow:hidden;margin-top:8px}.progress span{display:block;height:100%;background:var(--gold);width:0;transition:width .2s}
 .rules{font-size:12px;color:var(--muted);line-height:1.7}.rules summary{cursor:pointer;color:var(--green);font-weight:800}.rules ul{padding-left:20px}.footer{text-align:center;color:#84918a;font-size:11px;padding:8px}
-@media(max-width:560px){header{padding:14px 16px}.brand{font-size:16px}.top button{padding:10px 13px;font-size:13px}main{margin:17px auto}.intro{align-items:start;flex-direction:column}.meta{grid-template-columns:repeat(2,1fr)}.detail{grid-template-columns:1fr}.options{grid-template-columns:1fr}.option{min-height:58px}.panel{border-radius:15px}.tile{min-width:23px;height:34px;font-size:13px}}
+@media(max-width:760px){.practice-layout{grid-template-columns:1fr}.practice-layout #answerPanel{position:static}}@media(max-width:560px){header{padding:14px 16px}.brand{font-size:16px}.top button{padding:10px 13px;font-size:13px}main{margin:17px auto}.intro{align-items:start;flex-direction:column}.meta{grid-template-columns:repeat(2,1fr)}.detail{grid-template-columns:1fr}.options{grid-template-columns:1fr}.option{min-height:58px}.panel{border-radius:15px}.tile{min-width:23px;height:34px;font-size:13px}}
 </style>
 </head>
 <body>
@@ -38,7 +38,7 @@ main{max-width:900px;margin:24px auto;padding:0 16px 40px}.intro{display:flex;ju
 <div class="panel" id="answerPanel">
  <div class="panelhead"><h2>回答を選択</h2><span class="tag">4択</span></div>
  <div id="options" class="empty" style="padding:15px">問題を表示すると選択肢がここに表示されます。</div>
- <div class="actions"><button class="dark" id="checkBtn" disabled>回答する</button><button class="secondary" id="nextBtn" disabled>次へ →</button></div>
+ <div class="actions"><button class="dark" id="checkBtn" disabled>回答する</button></div>
  <div id="feedback" aria-live="polite"></div>
 </div>
 <div class="panel rules"><details><summary>Mリーグの点数計算ルールについて</summary><ul>
@@ -76,11 +76,16 @@ function score(fu,han,dealer,method){
 function formatScore(s){if(s.ron)return s.ron.toLocaleString("ja-JP")+"点";if(s.all)return s.all.toLocaleString("ja-JP")+"点オール";return "子"+s.child.toLocaleString("ja-JP")+"点 / 親"+s.parent.toLocaleString("ja-JP")+"点";}
 function label(fu,han,q){return fu+"符 "+han+"翻："+formatScore(score(fu,han,q.dealer,q.method));}
 function makeOptions(q){
- const candidates=[[q.fu,q.han],[q.fu===30?40:q.fu===40?50:30,q.han],[q.fu,q.han===1?2:q.han-1],[q.fu===20?30:q.fu-10,q.han+1],[q.fu+10,q.han]];
- const seen=new Set(),out=[];
- for(const [f,h] of candidates){if(f<20||h<1)continue;const t=label(f,h,q);if(!seen.has(t)){seen.add(t);out.push({fu:f,han:h,text:t,correct:f===q.fu&&h===q.han});}}
- for(let f=20;out.length<4&&f<=110;f+=10){for(let h=1;h<=8&&out.length<4;h++){const t=label(f,h,q);if(!seen.has(t)){seen.add(t);out.push({fu:f,han:h,text:t,correct:f===q.fu&&h===q.han});}}}
- return out.slice(0,4).sort(()=>Math.random()-.5);
+ const fuValues=[20,25,30,40,50,60,70,80,90,100,110];
+ const answer={fu:q.fu,han:q.han,text:label(q.fu,q.han,q),correct:true};
+ const unique=new Map();
+ for(const f of fuValues)for(let h=1;h<=8;h++){
+  if(f===q.fu&&h===q.han)continue;
+  const text=label(f,h,q);
+  if(!unique.has(text))unique.set(text,{fu:f,han:h,text,correct:false});
+ }
+ const distractors=Array.from(unique.values()).sort(()=>Math.random()-.5).slice(0,3);
+ return [answer,...distractors].sort(()=>Math.random()-.5);
 }
 function tileGroup(arr,isMeld){return '<div class="group '+(isMeld?'meld':'')+'">'+arr.map(t=>'<span class="tile '+(t==="赤五萬"||t==="赤五筒"||t==="赤五索"?'red':'')+'">'+t+'</span>').join('')+'</div>';}
 function renderQuestion(q){
@@ -110,7 +115,7 @@ function newQuestion(){
  current.options=makeOptionsCache;
  $("options").innerHTML=makeOptionsCache.map((o,i)=>'<button type="button" class="option" data-i="'+i+'"><span class="letter">'+["A","B","C","D"][i]+'</span><strong>'+o.text+'</strong></button>').join('');
  $("options").querySelectorAll(".option").forEach(el=>el.addEventListener("click",()=>{if(answered)return;selected=Number(el.dataset.i);$("options").querySelectorAll(".option").forEach((b,i)=>b.classList.toggle("selected",i===selected));$("checkBtn").disabled=false;}));
- $("checkBtn").disabled=true;$("nextBtn").disabled=true;$("feedback").innerHTML="";
+ $("checkBtn").disabled=true;$("feedback").innerHTML="";
 }
 function checkAnswer(){
  if(!current||selected<0||answered)return;answered=true;total++;
@@ -119,9 +124,9 @@ function checkAnswer(){
  $("feedback").className="feedback "+(ok?"good":"bad");
  $("feedback").innerHTML='<b>'+(ok?'正解！':'残念、不正解')+'</b>正解：'+current.fu+'符 '+current.han+'翻 ／ '+formatScore(score(current.fu,current.han,current.dealer,current.method))+'<div class="explain">符：'+current.fuNote+'<br>翻：'+current.yaku.join('、')+'。ドラ合計 '+(current.doraCount+current.uraCount)+'翻を加算しています。<br>点数はMリーグ公式ルールの計算（100点単位切り上げ・切り上げ満貫）です。</div>';
  $("correctCount").textContent=correct;$("totalCount").textContent=total;$("rate").textContent=Math.round(correct/total*100)+"%";
- $("checkBtn").disabled=true;$("nextBtn").disabled=false;
+ $("checkBtn").disabled=true;
 }
-$("newTop").addEventListener("click",newQuestion);$("startBtn").addEventListener("click",newQuestion);$("checkBtn").addEventListener("click",checkAnswer);$("nextBtn").addEventListener("click",newQuestion);
+$("newTop").addEventListener("click",newQuestion);$("startBtn").addEventListener("click",newQuestion);$("checkBtn").addEventListener("click",checkAnswer);
 </script>
 </body>
 </html>
