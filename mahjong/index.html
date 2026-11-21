@@ -62,7 +62,7 @@ const questions=[
 {round:"南4局",roundWind:"南",seat:"南家（親）",dealer:true,method:"ロン",riichi:false,closed:false,dora:"九索",ura:"—",doraCount:2,uraCount:0,fu:30,han:4,yaku:["混一色 2翻（副露）"],fuNote:"副底20＋東・北の明刻8＋単騎待ち2＝30符",wait:"単騎待ち",winner:"親",groups:[["東","東","東"],["一萬","二萬","三萬"],["七萬","八萬","九萬"],["北","北","北"],["五萬","五萬"]],melds:[0,3]},
 {round:"南4局",roundWind:"南",seat:"西家（子）",dealer:false,method:"ロン",riichi:true,closed:true,dora:"五索",ura:"一筒",doraCount:1,uraCount:1,fu:30,han:5,yaku:["リーチ 1翻","一気通貫 2翻","ドラ 2翻"],fuNote:"副底20＋門前ロン10＝30符",wait:"両面待ち",winner:"子",groups:[["一萬","二萬","三萬"],["四萬","五萬","六萬"],["七萬","八萬","九萬"],["二筒","三筒","四筒"],["六索","六索"]],melds:[]}
 ];
-let current=null,selected=-1,answered=false,total=0,correct=0,serial=0;
+let current=null,selected=-1,answered=false,total=0,correct=0,serial=0;\n// 全問題を1回ずつ出題するシャッフルバッグ。同じ問題は一巡するまで再登場しません。\nlet questionDeck=[],lastQuestionIndex=-1;\nfunction drawQuestion(){\n if(questionDeck.length===0){\n  questionDeck=questions.map((_,i)=>i);\n  for(let i=questionDeck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[questionDeck[i],questionDeck[j]]=[questionDeck[j],questionDeck[i]];}\n  // 前の周回の最後と新しい周回の最初が同じになる場合は先頭2件を入れ替える\n  if(questionDeck.length>1&&questionDeck[0]===lastQuestionIndex)[questionDeck[0],questionDeck[1]]=[questionDeck[1],questionDeck[0]];\n }\n lastQuestionIndex=questionDeck.shift();\n return questions[lastQuestionIndex];\n}
 const ceil100=n=>Math.ceil(n/100)*100;
 function score(fu,han,dealer,method){
  let base=fu*Math.pow(2,han+2),limit=null;
@@ -103,12 +103,12 @@ function renderQuestion(q){
  '<div class="sectionlabel">符の内訳メモ</div><div style="font-size:13px;color:var(--muted)">'+q.fuNote+'</div>';
  $("questionNo").textContent="第"+serial+"問";
  $("options").className="options";
- $("options").innerHTML=makeOptions(q).map((o,i)=>'<button type="button" class="option" data-i="'+i+'"><span class="letter">'+["A","B","C","D"][i]+'</span><strong>'+o.text+'</strong></button>').join('');
- q.options=Array.from($("options").querySelectorAll(".option")).map((el,i)=>({el,...makeOptionsCache[i]}));
+ $("options").innerHTML=makeOptionsCache.map((o,i)=>'<button type="button" class="option" data-i="'+i+'"><span class="letter">'+["A","B","C","D"][i]+'</span><strong>'+o.text+'</strong></button>').join('');
+
 }
 let makeOptionsCache=[];
 function newQuestion(){
- serial++;current=questions[Math.floor(Math.random()*questions.length)];selected=-1;answered=false;
+ serial++;current=drawQuestion();selected=-1;answered=false;
  makeOptionsCache=makeOptions(current);
  renderQuestion(current);
  // renderQuestion uses the prepared option set so the displayed and judged answers are identical.
