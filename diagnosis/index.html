@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4f0e8">
+<title>たびさき診断｜次の旅先、見つけよう</title>
+<style>
+:root{--ink:#24332f;--muted:#697873;--paper:#f7f5ef;--card:#fffefa;--green:#285d50;--mint:#e4eee7;--orange:#d97745;--line:#e6e3d9}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;line-height:1.65}button,input{font:inherit}.wrap{max-width:860px;margin:auto;padding:24px 18px 60px}.hero{padding:30px 8px 22px}.eyebrow{color:var(--green);font-size:.78rem;font-weight:800;letter-spacing:.14em}.hero h1{font-size:clamp(2rem,7vw,3.4rem);line-height:1.2;margin:10px 0}.hero p{color:var(--muted);margin:10px 0}.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,4vw,30px);box-shadow:0 10px 30px #344b3a0a}.progress{height:7px;background:#e9e8df;border-radius:10px;overflow:hidden;margin:8px 0 24px}.progress span{display:block;height:100%;background:var(--green);width:0;transition:width .25s}.step{display:none}.step.active{display:block}.qnum{font-size:.78rem;color:var(--orange);font-weight:800;letter-spacing:.1em}.question{font-size:1.3rem;font-weight:800;margin:5px 0 18px}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.choice{display:flex;align-items:center;gap:10px;text-align:left;padding:14px;border:1px solid var(--line);background:#fff;border-radius:14px;cursor:pointer;min-height:62px;color:var(--ink);transition:.15s}.choice:hover{border-color:var(--green)}.choice.selected{border:2px solid var(--green);background:var(--mint);padding:13px}.choice .emoji{font-size:1.35rem}.choice input{accent-color:var(--green)}.field{margin:18px 0}.field label{font-weight:750;display:block;margin-bottom:8px}.field select{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;background:white;color:var(--ink)}.range-row{display:flex;align-items:center;gap:12px}.range-row input{flex:1;accent-color:var(--green)}.range-value{font-weight:800;color:var(--green);min-width:4em;text-align:right}.actions{display:flex;gap:10px;justify-content:space-between;margin-top:25px}.btn{border:0;border-radius:999px;padding:13px 22px;font-weight:800;cursor:pointer}.btn.primary{background:var(--green);color:white;flex:1}.btn.secondary{background:#efeee7;color:var(--ink)}.btn:disabled{opacity:.35;cursor:not-allowed}.hint{font-size:.85rem;color:var(--muted)}.result{display:none}.result.show{display:block}.result-top{background:var(--mint);border-radius:18px;padding:22px}.result-top .tag{font-size:.78rem;font-weight:800;color:var(--green)}.result-top h2{font-size:2.3rem;margin:5px 0}.result-top p{margin:4px 0}.reason{margin:20px 0}.reason li{margin:7px 0}.subresults{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}.sub{border:1px solid var(--line);border-radius:15px;padding:14px}.sub strong{font-size:1.05rem}.sub small{display:block;color:var(--muted);margin-top:4px}.disclaimer{font-size:.8rem;color:var(--muted);margin-top:22px;border-top:1px solid var(--line);padding-top:14px}.footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}@media(max-width:520px){.choices,.subresults{grid-template-columns:1fr}.wrap{padding:12px 12px 40px}.hero{padding-top:22px}.panel{border-radius:18px}.choice{min-height:55px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+<div class="eyebrow">YOUR NEXT JOURNEY STARTS HERE</div>
+<h1>たびさき診断</h1>
+<p>いくつかの質問に答えるだけ。<br>今のあなたにぴったりな都道府県を見つけよう。</p>
+</header>
+<section class="panel" id="quiz">
+<div class="progress"><span id="bar"></span></div>
+<div id="steps">
+<section class="step active" data-step="0">
+<div class="qnum">QUESTION 01 / 06</div><div class="question">旅先でいちばん大切にしたいことは？</div>
+<div class="choices" data-key="priority">
+<button class="choice" data-value="nature"><span class="emoji">🌿</span>自然に癒やされたい</button><button class="choice" data-value="food"><span class="emoji">🍣</span>おいしいものを食べたい</button><button class="choice" data-value="culture"><span class="emoji">🏯</span>歴史や文化に触れたい</button><button class="choice" data-value="active"><span class="emoji">🚵</span>体を動かして遊びたい</button><button class="choice" data-value="relax"><span class="emoji">♨️</span>温泉や宿でのんびり</button><button class="choice" data-value="city"><span class="emoji">🎨</span>街歩き・買い物を楽しみたい</button>
+</div></section>
+<section class="step" data-step="1">
+<div class="qnum">QUESTION 02 / 06</div><div class="question">どんな景色に心が動く？</div>
+<div class="choices" data-key="scenery">
+<button class="choice" data-value="sea"><span class="emoji">🌊</span>海・島・青い水辺</button><button class="choice" data-value="mountain"><span class="emoji">⛰️</span>山・高原・森</button><button class="choice" data-value="snow"><span class="emoji">❄️</span>雪景色・冬らしさ</button><button class="choice" data-value="town"><span class="emoji">🏘️</span>趣ある町並み</button><button class="choice" data-value="variety"><span class="emoji">🌅</span>いろんな景色を見たい</button>
+</div></section>
+<section class="step" data-step="2">
+<div class="qnum">QUESTION 03 / 06</div><div class="question">旅の過ごし方、近いのはどれ？</div>
+<div class="choices" data-key="style">
+<button class="choice" data-value="slow"><span class="emoji">☕</span>予定を詰めず気ままに</button><button class="choice" data-value="active"><span class="emoji">🥾</span>朝から夜まで満喫</button><button class="choice" data-value="discover"><span class="emoji">🧭</span>知らない場所を開拓</button><button class="choice" data-value="comfort"><span class="emoji">🛏️</span>快適さ・宿の質を重視</button>
+</div></section>
+<section class="step" data-step="3">
+<div class="qnum">QUESTION 04 / 06</div><div class="question">旅先で食べたいものは？</div>
+<div class="choices" data-key="food">
+<button class="choice" data-value="seafood"><span class="emoji">🦀</span>海鮮・お寿司</button><button class="choice" data-value="local"><span class="emoji">🍜</span>ご当地グルメ・麺</button><button class="choice" data-value="meat"><span class="emoji">🥩</span>肉料理・郷土料理</button><button class="choice" data-value="sweets"><span class="emoji">🍰</span>スイーツ・カフェ</button><button class="choice" data-value="any"><span class="emoji">😋</span>なんでも楽しみ！</button>
+</div></section>
+<section class="step" data-step="4">
+<div class="qnum">QUESTION 05 / 06</div><div class="question">誰と、どんな旅をする予定？</div>
+<div class="choices" data-key="company">
+<button class="choice" data-value="solo"><span class="emoji">🎒</span>ひとりで気ままに</button><button class="choice" data-value="couple"><span class="emoji">💑</span>パートナーと</button><button class="choice" data-value="friends"><span class="emoji">🧑‍🤝‍🧑</span>友人とわいわい</button><button class="choice" data-value="family"><span class="emoji">👨‍👩‍👧</span>家族と一緒に</button>
+</div></section>
+<section class="step" data-step="5">
+<div class="qnum">QUESTION 06 / 06</div><div class="question">旅行の条件を教えてください</div>
+<div class="field"><label for="season">行きたい時期</label><select id="season"><option value="now">できれば近いうち（今の季節）</option><option value="spring">春（3〜5月）</option><option value="summer">夏（6〜8月）</option><option value="autumn">秋（9〜11月）</option><option value="winter">冬（12〜2月）</option><option value="any">時期はこだわらない</option></select></div>
+<div class="field"><label for="days">旅行の日数</label><select id="days"><option value="日帰り〜1泊">日帰り〜1泊</option><option value="2〜3泊" selected>2〜3泊</option><option value="4泊以上">4泊以上</option></select></div>
+<div class="field"><label for="budget">予算のイメージ（1人あたり・交通費込み）</label><div class="range-row"><input type="range" id="budget" min="1" max="5" value="3"><span class="range-value" id="budgetLabel">5〜8万円</span></div></div>
+<p class="hint">回答はこの端末内で診断に使われます。入力情報の送信はありません。</p>
+</section>
+</div>
+<div class="actions" id="nav"><button class="btn secondary" id="back" disabled>戻る</button><button class="btn primary" id="next" disabled>次へ</button></div>
+<div class="result" id="result" aria-live="polite"></div>
+</section>
+<p class="footer">たびさき診断 · 47都道府県からあなたの旅先候補を提案します</p>
+</main>
+<script>
+const prefectures = [
+{name:"北海道",area:"北海道",season:["summer","winter"],tags:["nature","food","active","sea","mountain","snow","seafood","meat"],desc:"雄大な自然と、ここでしか味わえない食の宝庫。エリアを変えれば何度でも新しい発見があります。",spots:"札幌・小樽、富良野、美瑛、函館",seasonTip:"冬は雪景色や冬の味覚、夏は爽やかな高原や花畑が魅力。"},
+{name:"青森県",area:"東北",season:["summer","autumn","winter"],tags:["nature","food","culture","mountain","snow","seafood","local"],desc:"祭り、りんご、海の幸、深い森。素朴な風景と土地の文化をじっくり楽しめます。",spots:"奥入瀬渓流、弘前、青森市、八甲田",seasonTip:"新緑から紅葉、雪景色まで季節ごとの表情が豊か。"},
+{name:"岩手県",area:"東北",season:["spring","summer","autumn"],tags:["nature","culture","active","mountain","town","meat","local"],desc:"広い空と山々、歴史ある町。自然の中でゆったり過ごしたい人におすすめ。",spots:"平泉、盛岡、三陸、八幡平",seasonTip:"春〜秋は高原散策や三陸の景色を楽しみやすい時期。"},
+{name:"宮城県",area:"東北",season:["spring","summer","autumn"],tags:["food","culture","city","sea","seafood","local","relax"],desc:"都市の便利さと海・山の楽しみが近くにそろう、バランスのよい旅先。",spots:"仙台、松島、秋保温泉、鳴子温泉",seasonTip:"松島の景色や温泉、旬の海鮮を組み合わせて。"},
+{name:"秋田県",area:"東北",season:["summer","autumn","winter"],tags:["nature","culture","relax","mountain","snow","town","local"],desc:"秘湯や伝統行事、郷土の味。落ち着いた時間を過ごしたい旅にぴったり。",spots:"角館、乳頭温泉郷、田沢湖、男鹿",seasonTip:"冬は雪見風呂、春は角館の桜が人気。"},
+{name:"山形県",area:"東北",season:["summer","autumn","winter"],tags:["nature","food","relax","mountain","snow","meat","local"],desc:"山の恵み、果物、温泉。四季の景色とおいしいものを一緒に楽しめます。",spots:"蔵王、銀山温泉、山寺、米沢",seasonTip:"冬の樹氷や温泉、秋の紅葉など山の季節感が魅力。"},
+{name:"福島県",area:"東北",season:["spring","summer","autumn"],tags:["nature","food","relax","mountain","town","meat","local"],desc:"湖や高原、城下町に温泉。広い県内で好みに合わせた旅を組み立てられます。",spots:"会津若松、五色沼、猪苗代、いわき",seasonTip:"春の花や秋の紅葉、高原のドライブがおすすめ。"},
+{name:"茨城県",area:"関東",season:["spring","autumn"],tags:["nature","food","active","sea","town","seafood","sweets"],desc:"海辺や花の名所、個性豊かな食。気軽な週末旅にも向いています。",spots:"国営ひたち海浜公園、偕楽園、大洗、筑波山",seasonTip:"春の花畑や秋の海辺散策を楽しんで。"},
+{name:"栃木県",area:"関東",season:["spring","autumn","winter"],tags:["nature","culture","relax","mountain","town","sweets"],desc:"世界遺産から高原、温泉まで。自然と文化を欲張りに楽しめます。",spots:"日光、那須、鬼怒川温泉、宇都宮",seasonTip:"紅葉や冬の温泉、春の高原散策もおすすめ。"},
+{name:"群馬県",area:"関東",season:["spring","autumn","winter"],tags:["nature","relax","active","mountain","snow","meat"],desc:"名湯と山の絶景が待つ、リフレッシュにぴったりのエリア。",spots:"草津温泉、伊香保温泉、尾瀬、谷川岳",seasonTip:"冬は温泉、夏は高原や尾瀬の自然を満喫。"},
+{name:"埼玉県",area:"関東",season:["spring","autumn"],tags:["nature","culture","active","town","sweets"],desc:"レトロな町歩きや渓谷の自然を、アクセスよく楽しめる旅先。",spots:"川越、長瀞、秩父、鉄道博物館",seasonTip:"春の花や秋の渓谷散策が気持ちよい季節。"},
+{name:"千葉県",area:"関東",season:["spring","summer","autumn"],tags:["nature","food","active","sea","seafood","sweets"],desc:"海辺のドライブや新鮮な海鮮、レジャーを気軽に楽しめます。",spots:"南房総、銚子、養老渓谷、成田",seasonTip:"海遊びは夏、花や海辺のドライブは春秋もおすすめ。"},
+{name:"東京都",area:"関東",season:["spring","autumn","winter"],tags:["food","culture","city","town","sweets"],desc:"新しい店や文化に出会える刺激的な街。短い日程でも満足度の高い旅に。",spots:"浅草、上野、谷根千、奥多摩",seasonTip:"街歩きは春秋が快適。冬は美術館やグルメ巡りも。"},
+{name:"神奈川県",area:"関東",season:["spring","summer","autumn"],tags:["food","culture","city","sea","relax","sweets"],desc:"港町、古都、海辺、温泉。気分に合わせて過ごし方を選べます。",spots:"鎌倉、横浜、箱根、江の島",seasonTip:"海辺や古都の散策、箱根の温泉を季節に合わせて。"},
+{name:"新潟県",area:"中部",season:["summer","autumn","winter"],tags:["nature","food","relax","mountain","snow","seafood","local"],desc:"米どころならではの食と、山・海・温泉。自然の恵みを味わう旅へ。",spots:"越後湯沢、佐渡、月岡温泉、清津峡",seasonTip:"冬は雪景色と温泉、秋は新米や紅葉が楽しみ。"},
+{name:"富山県",area:"中部",season:["spring","summer","autumn"],tags:["nature","food","active","sea","mountain","seafood"],desc:"立山連峰の迫力と、富山湾の海の幸。絶景と美食を両立できます。",spots:"立山黒部、雨晴海岸、富山市、五箇山",seasonTip:"春〜秋は山岳観光や海辺の景色を楽しむ好機。"},
+{name:"石川県",area:"中部",season:["spring","autumn","winter"],tags:["food","culture","relax","sea","town","seafood","sweets"],desc:"工芸や美しい町並み、上質な食文化。大人の街歩き旅におすすめ。",spots:"金沢、加賀温泉郷、能登、山中温泉",seasonTip:"旬の海の幸と町歩き。訪問前に交通・営業情報を確認して。"},
+{name:"福井県",area:"中部",season:["spring","summer","autumn","winter"],tags:["nature","culture","active","sea","mountain","seafood"],desc:"断崖の絶景や恐竜、海の幸。知的好奇心も満たされる旅先です。",spots:"東尋坊、福井県立恐竜博物館、三方五湖、敦賀",seasonTip:"海岸の景色や季節の魚介を楽しんで。"},
+{name:"山梨県",area:"中部",season:["spring","summer","autumn"],tags:["nature","food","active","mountain","relax","sweets"],desc:"富士山や湖、高原の空気。自然の中でリフレッシュしたい日に。",spots:"河口湖、清里、昇仙峡、石和温泉",seasonTip:"春の花、夏の高原、秋の紅葉と富士山の眺めが魅力。"},
+{name:"長野県",area:"中部",season:["spring","summer","autumn","winter"],tags:["nature","culture","active","mountain","snow","relax","local"],desc:"山岳絶景と高原、歴史ある町。アクティブ派にも癒やし派にも。",spots:"上高地、松本、軽井沢、善光寺",seasonTip:"夏の避暑や秋の紅葉、冬のスノーアクティビティまで。"},
+{name:"岐阜県",area:"中部",season:["spring","summer","autumn","winter"],tags:["nature","culture","relax","mountain","snow","town","meat"],desc:"古い町並みと山里の風景、名湯。日本らしい情緒を感じる旅に。",spots:"白川郷、高山、下呂温泉、郡上八幡",seasonTip:"雪の合掌造りや春秋の町歩きが印象的。"},
+{name:"静岡県",area:"中部",season:["spring","summer","autumn","winter"],tags:["nature","food","relax","sea","mountain","seafood","sweets"],desc:"富士山、海、温泉、お茶。景色も食も楽しみたい人にぴったり。",spots:"伊豆、熱海、富士宮、浜松",seasonTip:"海辺や温泉は通年楽しめ、春は花や富士山の眺望も。"},
+{name:"愛知県",area:"中部",season:["spring","autumn","winter"],tags:["food","culture","city","town","local","meat"],desc:"個性豊かな名古屋めしと、城や産業文化。街を味わう旅に。",spots:"名古屋、犬山、常滑、岡崎",seasonTip:"街歩きや食べ歩きは気候の穏やかな春秋に。"},
+{name:"三重県",area:"近畿",season:["spring","summer","autumn"],tags:["food","culture","relax","sea","seafood","town"],desc:"伊勢神宮や海辺の景色、豊かな海の幸。心を整える旅にも。",spots:"伊勢志摩、鳥羽、伊賀、熊野古道",seasonTip:"参拝と海辺の散策、旬の魚介を組み合わせて。"},
+{name:"滋賀県",area:"近畿",season:["spring","summer","autumn"],tags:["nature","culture","active","sea","mountain","town"],desc:"湖畔の開放感と城下町の歴史。ゆったり自分のペースで巡れます。",spots:"琵琶湖、彦根、近江八幡、比叡山",seasonTip:"湖畔サイクリングや春秋の町歩きが心地よい。"},
+{name:"京都府",area:"近畿",season:["spring","autumn","winter"],tags:["culture","food","city","town","sweets","relax"],desc:"寺社や路地、食文化。何度訪れても新しい発見がある王道の旅先。",spots:"京都市、宇治、天橋立、伏見",seasonTip:"春の桜や秋の紅葉は混雑しやすいため、時間帯を工夫して。"},
+{name:"大阪府",area:"近畿",season:["spring","autumn","winter"],tags:["food","culture","city","active","local"],desc:"食い倒れの街とエンタメ。にぎやかに遊び尽くしたい人に。",spots:"大阪市、USJ周辺、堺、箕面",seasonTip:"食べ歩きや街巡り、屋内施設も組み合わせやすい。"},
+{name:"兵庫県",area:"近畿",season:["spring","autumn","winter"],tags:["food","culture","city","sea","relax","seafood","meat"],desc:"港町から温泉、城下町まで。多彩な表情を一度の旅で楽しめます。",spots:"神戸、姫路城、有馬温泉、城崎温泉",seasonTip:"温泉と街歩き、季節の味覚をゆったりと。"},
+{name:"奈良県",area:"近畿",season:["spring","autumn"],tags:["culture","nature","town","slow"],desc:"古寺や古墳、鹿のいる風景。静かに歴史と向き合いたい旅に。",spots:"奈良公園、明日香、吉野、ならまち",seasonTip:"春の花や秋の古都散策がおすすめ。"},
+{name:"和歌山県",area:"近畿",season:["spring","summer","autumn"],tags:["nature","food","relax","sea","mountain","seafood"],desc:"海岸線と山深い聖地、温泉。自然のスケールを感じる旅へ。",spots:"白浜、高野山、熊野古道、那智勝浦",seasonTip:"海辺の季節旅にも、山の参詣道歩きにも。"},
+{name:"鳥取県",area:"中国",season:["spring","summer","autumn"],tags:["nature","food","active","sea","mountain","seafood"],desc:"砂丘や山陰の海、素朴な町。のびのびとした旅を楽しめます。",spots:"鳥取砂丘、境港、大山、三朝温泉",seasonTip:"砂丘散策は暑さを避けた時間帯に。秋は山の景色も。"},
+{name:"島根県",area:"中国",season:["spring","autumn","winter"],tags:["culture","nature","relax","sea","town","seafood"],desc:"神話の舞台や美しい庭園、温泉。落ち着いた大人の旅に。",spots:"出雲大社、松江、石見銀山、玉造温泉",seasonTip:"神社や城下町、温泉をゆっくり巡るのがおすすめ。"},
+{name:"岡山県",area:"中国",season:["spring","autumn"],tags:["culture","food","city","town","sea","sweets"],desc:"晴れやかな気候と庭園、アートな島旅。穏やかな時間を過ごせます。",spots:"倉敷美観地区、岡山後楽園、蒜山、犬島",seasonTip:"春秋の町歩きや島のアート巡りが快適。"},
+{name:"広島県",area:"中国",season:["spring","autumn"],tags:["food","culture","city","sea","seafood","town"],desc:"平和を学ぶ場所と瀬戸内の島々、お好み焼き。心に残る旅に。",spots:"宮島、広島市、尾道、しまなみ海道",seasonTip:"島歩きやサイクリングは春秋が特におすすめ。"},
+{name:"山口県",area:"中国",season:["spring","autumn"],tags:["nature","food","culture","sea","town","seafood"],desc:"青い海と歴史ある町、個性豊かな絶景。穴場を探す旅にも。",spots:"角島、萩、錦帯橋、秋吉台",seasonTip:"海岸ドライブやカルスト台地の散策に。"},
+{name:"徳島県",area:"四国",season:["spring","summer","autumn"],tags:["nature","active","culture","mountain","sea","local"],desc:"渓谷や海のアクティビティ、独自の文化。冒険心をくすぐる旅先。",spots:"祖谷、大歩危、小歩危、鳴門",seasonTip:"新緑や夏の水辺、秋の渓谷が見どころ。"},
+{name:"香川県",area:"四国",season:["spring","autumn"],tags:["food","culture","city","sea","town","sweets"],desc:"うどん巡りと瀬戸内の島々。コンパクトに楽しみたい旅に。",spots:"高松、直島、琴平、小豆島",seasonTip:"島巡りや町歩きは春秋が快適。"},
+{name:"愛媛県",area:"四国",season:["spring","autumn"],tags:["relax","culture","food","sea","town","seafood"],desc:"名湯と城下町、穏やかな瀬戸内。のんびり派にも食いしん坊にも。",spots:"道後温泉、松山、しまなみ海道、内子",seasonTip:"温暖な気候を生かして町歩きや島旅を。"},
+{name:"高知県",area:"四国",season:["spring","summer","autumn"],tags:["nature","food","active","sea","mountain","seafood","local"],desc:"豪快な海と川、かつおの味。自然の中で思い切り遊びたい人に。",spots:"四万十川、桂浜、仁淀川、室戸",seasonTip:"川遊びや海辺のドライブは季節と天候を確認して。"},
+{name:"福岡県",area:"九州",season:["spring","autumn","winter"],tags:["food","city","culture","sea","seafood","local","sweets"],desc:"屋台やご当地グルメ、街の活気。食べ歩き中心の旅にぴったり。",spots:"福岡市、太宰府、門司港、糸島",seasonTip:"街歩きや海辺の景色、旬の味覚を楽しんで。"},
+{name:"佐賀県",area:"九州",season:["spring","autumn","winter"],tags:["culture","relax","food","sea","town","seafood"],desc:"焼き物の里や温泉、海の幸。静かな土地の魅力を見つける旅へ。",spots:"有田、唐津、嬉野温泉、武雄温泉",seasonTip:"陶器の町歩きや温泉でゆったり過ごすのがおすすめ。"},
+{name:"長崎県",area:"九州",season:["spring","autumn","winter"],tags:["culture","food","city","sea","town","seafood"],desc:"異国情緒ある街並みと島々の風景。文化も景色も楽しめます。",spots:"長崎市、ハウステンボス、五島列島、雲仙",seasonTip:"坂の街散策や島旅、温泉を組み合わせて。"},
+{name:"熊本県",area:"九州",season:["spring","autumn"],tags:["nature","food","active","mountain","relax","meat"],desc:"阿蘇の雄大な景色と温泉、力強い郷土の味。自然派におすすめ。",spots:"阿蘇、熊本城、黒川温泉、天草",seasonTip:"草原ドライブや温泉、海の景色を楽しんで。"},
+{name:"大分県",area:"九州",season:["spring","autumn","winter"],tags:["relax","nature","food","mountain","sea","meat"],desc:"湯けむりの温泉地と山の景色。心身を休めるごほうび旅に。",spots:"別府、由布院、九重、臼杵",seasonTip:"肌寒い季節の温泉旅はもちろん、春秋の散策も魅力。"},
+{name:"宮崎県",area:"九州",season:["spring","summer","autumn"],tags:["nature","food","active","sea","mountain","meat"],desc:"南国らしい海岸線と神話の地。明るい景色の中で開放的な旅を。",spots:"青島、高千穂、日南、えびの高原",seasonTip:"海岸ドライブや高千穂の自然を季節に合わせて。"},
+{name:"鹿児島県",area:"九州",season:["spring","summer","autumn","winter"],tags:["nature","food","relax","active","sea","mountain","meat"],desc:"火山と温泉、南の島々。スケールの大きな自然を味わえます。",spots:"桜島、指宿、霧島、屋久島",seasonTip:"温泉や島旅など、行き先によってベストシーズンが異なります。"},
+{name:"沖縄県",area:"沖縄",season:["spring","summer","autumn","winter"],tags:["nature","food","relax","active","sea","seafood","town"],desc:"青い海と島時間、独自の文化。日常を離れて気分を切り替えたいときに。",spots:"那覇、沖縄本島北部、石垣島、宮古島",seasonTip:"海遊びは季節・海況を確認。冬も温暖な気候と文化旅が楽しめます。"}
+];
+const answers={};let current=0;
+const steps=[...document.querySelectorAll(".step")],bar=document.getElementById("bar"),back=document.getElementById("back"),next=document.getElementById("next"),nav=document.getElementById("nav");
+document.querySelectorAll(".choices").forEach(group=>group.addEventListener("click",e=>{const b=e.target.closest(".choice");if(!b)return;group.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");answers[group.dataset.key]=b.dataset.value;next.disabled=false;}));
+const budget=document.getElementById("budget"),budgetLabel=document.getElementById("budgetLabel");
+const budgetNames=["3万円以内","3〜5万円","5〜8万円","8〜12万円","12万円以上"];
+budget.addEventListener("input",()=>budgetLabel.textContent=budgetNames[Number(budget.value)-1]);
+function renderStep(){steps.forEach((s,i)=>s.classList.toggle("active",i===current));bar.style.width=((current+1)/6*100)+"%";back.disabled=current===0;next.textContent=current===5?"診断する":"次へ";next.disabled=current<5&&!answers[steps[current].querySelector(".choices")?.dataset.key];}
+back.addEventListener("click",()=>{if(current>0){current--;renderStep();}});
+next.addEventListener("click",()=>{if(current<5){current++;renderStep();}else showResult();});
+function score(p){
+ let s=0;const a=answers;
+ if(p.tags.includes(a.priority))s+=5;
+ if(p.tags.includes(a.scenery))s+=4;
+ if(p.tags.includes(a.style))s+=3;
+ if(a.food==="seafood"&&p.tags.includes("seafood"))s+=4;
+ if(a.food==="local"&&p.tags.includes("local"))s+=4;
+ if(a.food==="meat"&&p.tags.includes("meat"))s+=4;
+ if(a.food==="sweets"&&p.tags.includes("sweets"))s+=4;
+ if(a.food==="any"&&p.tags.includes("food"))s+=2;
+ const season=document.getElementById("season").value;
+ if(season!=="any"&&p.season.includes(season))s+=4;
+ if(season!=="any"&&!p.season.includes(season))s-=1;
+ if(a.company==="family"&&["city","nature","active"].some(t=>p.tags.includes(t)))s+=1;
+ if(a.company==="solo"&&["culture","nature","food"].some(t=>p.tags.includes(t)))s+=1;
+ if(a.company==="couple"&&["relax","food","town"].some(t=>p.tags.includes(t)))s+=1;
+ if(a.company==="friends"&&["active","food","city"].some(t=>p.tags.includes(t)))s+=1;
+ return s;
+}
+function showResult(){
+ const season=document.getElementById("season").value,days=document.getElementById("days").value,budgetName=budgetNames[Number(budget.value)-1];
+ let ranked=prefectures.map(p=>({...p,score:score(p)})).sort((a,b)=>b.score-a.score);
+ // 同点時も結果が固定されすぎないよう候補内を軽くシャッフル
+ for(let i=0;i<ranked.length-1;i++){if(ranked[i].score===ranked[i+1].score&&Math.random()>.5)[ranked[i],ranked[i+1]]=[ranked[i+1],ranked[i]];}
+ const top=ranked[0],alts=ranked.slice(1,4);
+ const seasonText=season==="now"?"今の季節":({spring:"春",summer:"夏",autumn:"秋",winter:"冬",any:"季節を問わず"}[season]);
+ document.getElementById("steps").style.display="none";nav.style.display="none";bar.style.width="100%";
+ const result=document.getElementById("result");result.classList.add("show");
+ result.innerHTML=`<div class="result-top"><div class="tag">YOUR DESTINATION MATCH</div><h2>${top.name}</h2><p><strong>今のあなたにおすすめの旅先です。</strong></p><p>${top.desc}</p></div>
+ <div class="reason"><h3>おすすめした理由</h3><ul><li>「${({"nature":"自然に癒やされたい","food":"おいしいものを食べたい","culture":"歴史や文化に触れたい","active":"体を動かして遊びたい","relax":"温泉や宿でのんびり","city":"街歩き・買い物を楽しみたい"})[answers.priority]}」という希望にマッチ</li><li>${seasonText}の旅におすすめ。 ${top.seasonTip}</li><li>旅のスタイルは「${days}」、予算イメージは「${budgetName}」で検討してみて。</li></ul><p><strong>立ち寄り候補：</strong>${top.spots}</p></div>
+ <h3>ほかにも相性のよい候補</h3><div class="subresults">${alts.map((p,i)=>`<div class="sub"><strong>${p.name}</strong><small>${p.desc}</small><small>スポット：${p.spots}</small></div>`).join("")}</div>
+ <div class="disclaimer">この診断は回答と都道府県の一般的な観光特性をもとにした提案です。予算や移動時間、営業状況、季節の見どころはエリア・日程によって異なります。予約前に交通機関・施設の最新情報をご確認ください。予算は診断の参考情報で、料金を保証するものではありません。</div>
+ <div class="actions"><button class="btn secondary" id="redo">もう一度診断する</button><button class="btn primary" id="share">結果をコピー</button></div>`;
+ document.getElementById("redo").addEventListener("click",()=>location.reload());
+ document.getElementById("share").addEventListener("click",async()=>{const t="たびさき診断の結果："+top.name+"\n"+top.desc;try{await navigator.clipboard.writeText(t);document.getElementById("share").textContent="コピーしました！";}catch(e){document.getElementById("share").textContent="コピーできませんでした";}});
+}
+renderStep();
+</script>
+</body>
+</html>
