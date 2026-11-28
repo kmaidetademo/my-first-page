@@ -62,7 +62,31 @@ const questions=[
 {round:"南4局",roundWind:"南",seat:"南家（親）",dealer:true,method:"ロン",riichi:false,closed:false,dora:"九索",ura:"—",doraCount:2,uraCount:0,fu:30,han:4,yaku:["混一色 2翻（副露）"],fuNote:"副底20＋東・北の明刻8＋単騎待ち2＝30符",wait:"単騎待ち",winner:"親",groups:[["東","東","東"],["一萬","二萬","三萬"],["七萬","八萬","九萬"],["北","北","北"],["五萬","五萬"]],melds:[0,3]},
 {round:"南4局",roundWind:"南",seat:"西家（子）",dealer:false,method:"ロン",riichi:true,closed:true,dora:"五索",ura:"一筒",doraCount:1,uraCount:1,fu:30,han:5,yaku:["リーチ 1翻","一気通貫 2翻","ドラ 2翻"],fuNote:"副底20＋門前ロン10＝30符",wait:"両面待ち",winner:"子",groups:[["一萬","二萬","三萬"],["四萬","五萬","六萬"],["七萬","八萬","九萬"],["二筒","三筒","四筒"],["六索","六索"]],melds:[]}
 ];
-let current=null,selected=-1,answered=false,total=0,correct=0,serial=0;\n// 全問題を1回ずつ出題するシャッフルバッグ。同じ問題は一巡するまで再登場しません。\nlet questionDeck=[],lastQuestionIndex=-1;\nfunction drawQuestion(){\n if(questionDeck.length===0){\n  questionDeck=questions.map((_,i)=>i);\n  for(let i=questionDeck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[questionDeck[i],questionDeck[j]]=[questionDeck[j],questionDeck[i]];}\n  // 前の周回の最後と新しい周回の最初が同じになる場合は先頭2件を入れ替える\n  if(questionDeck.length>1&&questionDeck[0]===lastQuestionIndex)[questionDeck[0],questionDeck[1]]=[questionDeck[1],questionDeck[0]];\n }\n lastQuestionIndex=questionDeck.shift();\n return questions[lastQuestionIndex];\n}
+let current=null,selected=-1,answered=false,total=0,correct=0,serial=0;
+// 基本問題を土台に、毎回ランダムな局・席・牌種のバリエーションを生成します。
+let lastBaseIndex=-1;
+const rounds=["東1局","東2局","東3局","東4局","南1局","南2局","南3局","南4局"];
+const seatNames=["東家","南家","西家","北家"];
+const suits=[["萬","筒","索"],["筒","索","萬"],["索","萬","筒"]];
+const doraTiles=["一萬","二萬","三萬","四萬","五萬","六萬","七萬","八萬","九萬","一筒","二筒","三筒","四筒","五筒","六筒","七筒","八筒","九筒","一索","二索","三索","四索","五索","六索","七索","八索","九索","東","南","西","北","白","發","中"];
+function drawQuestion(){
+ let index=Math.floor(Math.random()*questions.length);
+ if(questions.length>1&&index===lastBaseIndex)index=(index+1+Math.floor(Math.random()*(questions.length-1)))%questions.length;
+ lastBaseIndex=index;
+ const q=JSON.parse(JSON.stringify(questions[index]));
+ q.round=rounds[Math.floor(Math.random()*rounds.length)];
+ q.roundWind=q.round[0];
+ if(q.dealer){q.seat="東家（親）";}
+ else {const seat=seatNames[1+Math.floor(Math.random()*3)];q.seat=seat+"（子）";}
+ // 萬子・筒子・索子の表記をまとめて入れ替え、牌姿にも変化を付けます。
+ const map=suits[Math.floor(Math.random()*suits.length)];
+ const suitMap={"萬":map[0],"筒":map[1],"索":map[2]};
+ const convert=t=>{for(const from of ["萬","筒","索"])if(t.endsWith(from))return t.slice(0,-1)+suitMap[from];return t;};
+ q.groups=q.groups.map(group=>group.map(convert));
+ q.dora=doraTiles[Math.floor(Math.random()*doraTiles.length)];
+ q.ura=q.riichi?doraTiles[Math.floor(Math.random()*doraTiles.length)]:"—";
+ return q;
+}
 const ceil100=n=>Math.ceil(n/100)*100;
 function score(fu,han,dealer,method){
  let base=fu*Math.pow(2,han+2),limit=null;
